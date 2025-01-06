@@ -1,0 +1,48 @@
+[
+  {
+    "id": 1,
+    "name": "LARMS: Enabling LLMs to Provide Remedy for Mental Status",
+    "image": "/LARMS.png",
+    "description": "A novel mental health companion utilizing large language models, evaluated using BLEU and CIDEr metrics.",
+    "tags": ["Python", "NLP", "LLM", "BLEU", "CIDEr"],
+    "source_code": "https://github.com/narensen/LARMS-1.2",
+    "demo": ""
+  },
+
+  {
+    "id": 3,
+    "name": "Enhanced Sparse Attention",
+    "image": "/SparseAttention.png",
+    "description": "A project focusing on enhanced sparse attention mechanisms for improving computational efficiency and accuracy in various tasks.",
+    "tags": ["Python", "Attention Mechanisms", "NLP", "Deep Learning"],
+    "source_code": "https://github.com/narensen/enhanced-sparse-attention/tree/main/main",
+    "demo": ""
+  },
+  {
+    "id": 4,
+    "name": "YoloChat",
+    "image": "/Yolo.jpeg",
+    "description": "An AI-powered chatbot built using the YOLO object detection model for context-aware conversations.",
+    "tags": ["Python", "YOLO", "Chatbot", "AI"],
+    "source_code": "https://github.com/narensen/YoloChat",
+    "demo": ""
+  },
+  {
+    "id": 5,
+    "name": "Demoire.dat",
+    "image": "/demoire.jpeg",
+    "description": "A solution to reduce moiré patterns in images, leveraging advanced image processing and deep learning techniques.",
+    "tags": ["Python", "Image Processing", "Deep Learning", "Moiré Reduction"],
+    "source_code": "https://github.com/narensen/demoire.dat",
+    "demo": ""
+  },
+  {
+    "id": 6,
+    "name": "MinBPE.rs",
+    "image": "/Rust.png",
+    "description": "A minimal byte-pair encoding implementation in Rust designed for speed and simplicity.",
+    "tags": ["Rust", "Byte Pair Encoding", "NLP", "Compression"],
+    "source_code": "https://github.com/narensen/minbpe.rs",
+    "demo": ""
+  }
+]
