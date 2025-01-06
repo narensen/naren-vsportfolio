@@ -1,16 +1,7 @@
 import React from 'react';
 import Image from 'next/image';
-import GitHubCalendar from 'react-github-calendar';
 
 const GithubPage = ({ repos, user, error }) => {
-  const theme = {
-    level0: '#161B22',
-    level1: '#0e4429',
-    level2: '#006d32',
-    level3: '#26a641',
-    level4: '#39d353',
-  };
-
   if (error) {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen p-4">
@@ -28,7 +19,6 @@ const GithubPage = ({ repos, user, error }) => {
       <div className="max-w-4xl mx-auto bg-white rounded-lg shadow-sm p-6 mb-8">
         <div className="flex flex-col sm:flex-row items-center justify-between gap-6">
           <div className="flex items-center gap-4">
-            {/* Fixed Image component */}
             <div className="relative" style={{ width: '96px', height: '96px' }}>
               <Image
                 src={user.avatar_url}
@@ -96,16 +86,16 @@ const GithubPage = ({ repos, user, error }) => {
         </div>
       </div>
 
-      {/* Contributions Calendar */}
+      {/* GitHub Contributions Calendar */}
       <div className="max-w-4xl mx-auto bg-white rounded-lg shadow-sm p-6">
         <h2 className="text-xl font-semibold text-gray-900 mb-4">Contributions</h2>
-        <div className="overflow-x-auto">
-          <GitHubCalendar
-            username={user.login}
-            theme={theme}
-            hideColorLegend
-            hideMonthLabels
-            className="w-full"
+        <div className="overflow-hidden">
+          <iframe
+            src={`https://ghchart.rshah.org/${user.login}`}
+            frameBorder="0"
+            scrolling="no"
+            className="w-full h-32"
+            title="GitHub Contributions"
           />
         </div>
       </div>
@@ -114,7 +104,7 @@ const GithubPage = ({ repos, user, error }) => {
 };
 
 export async function getStaticProps() {
-  const username = 'narensen';
+  const username = 'narensen'; // Replace with your GitHub username
 
   try {
     const userRes = await fetch(`https://api.github.com/users/${username}`, {
@@ -166,14 +156,6 @@ export async function getStaticProps() {
     repos = repos
       .sort((a, b) => b.stargazers_count - a.stargazers_count)
       .slice(0, 6);
-
-    const rateLimit = await fetch('https://api.github.com/rate_limit', {
-      headers: {
-        Authorization: `token ${process.env.GITHUB_API_KEY}`
-      }
-    });
-    const rateLimitData = await rateLimit.json();
-    console.log('GitHub API Rate Limit:', rateLimitData);
 
     return {
       props: {
