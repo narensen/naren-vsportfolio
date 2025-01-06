@@ -3,7 +3,6 @@ import Image from 'next/image';
 import GitHubCalendar from 'react-github-calendar';
 
 const GithubPage = ({ repos, user, error }) => {
-  // Theme for the GitHub contributions calendar
   const theme = {
     level0: '#161B22',
     level1: '#0e4429',
@@ -12,7 +11,6 @@ const GithubPage = ({ repos, user, error }) => {
     level4: '#39d353',
   };
 
-  // Handle error state
   if (error) {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen p-4">
@@ -30,14 +28,16 @@ const GithubPage = ({ repos, user, error }) => {
       <div className="max-w-4xl mx-auto bg-white rounded-lg shadow-sm p-6 mb-8">
         <div className="flex flex-col sm:flex-row items-center justify-between gap-6">
           <div className="flex items-center gap-4">
-            <div className="relative w-24 h-24 rounded-full overflow-hidden">
+            {/* Fixed Image component */}
+            <div className="relative" style={{ width: '96px', height: '96px' }}>
               <Image
                 src={user.avatar_url}
                 alt={user.login}
-                layout="fill"
-                objectFit="cover"
+                width={96}
+                height={96}
                 className="rounded-full"
                 priority
+                unoptimized
               />
             </div>
             <div>
@@ -114,10 +114,9 @@ const GithubPage = ({ repos, user, error }) => {
 };
 
 export async function getStaticProps() {
-  const username = 'narensen'; // Your GitHub username
+  const username = 'narensen';
 
   try {
-    // Fetch user data
     const userRes = await fetch(`https://api.github.com/users/${username}`, {
       headers: {
         Authorization: `token ${process.env.GITHUB_API_KEY}`
@@ -140,7 +139,6 @@ export async function getStaticProps() {
 
     const user = await userRes.json();
 
-    // Fetch repositories
     const repoRes = await fetch(
       `https://api.github.com/users/${username}/repos?per_page=100&sort=updated`,
       {
@@ -165,13 +163,10 @@ export async function getStaticProps() {
     }
 
     let repos = await repoRes.json();
-    
-    // Sort by stars and take top 6
     repos = repos
       .sort((a, b) => b.stargazers_count - a.stargazers_count)
       .slice(0, 6);
 
-    // Check rate limit (optional, for debugging)
     const rateLimit = await fetch('https://api.github.com/rate_limit', {
       headers: {
         Authorization: `token ${process.env.GITHUB_API_KEY}`
@@ -186,7 +181,7 @@ export async function getStaticProps() {
         repos,
         user,
       },
-      revalidate: 10, // Revalidate every 10 seconds
+      revalidate: 10,
     };
   } catch (error) {
     console.error('Failed to fetch GitHub data:', error);
