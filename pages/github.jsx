@@ -77,7 +77,7 @@ const GithubPage = ({ repos, user, error }) => {
               <p className="text-xs text-gray-600 mb-2 line-clamp-2">{repo.description}</p>
               <div className="flex items-center gap-3">
                 <div className="flex items-center gap-1">
-                  <svg className="w-3 h-3 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                  <svg className="w-2 h-2 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
                     <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
                   </svg>
                   <span className="text-xs text-gray-600">{repo.stargazers_count}</span>
@@ -106,9 +106,9 @@ const GithubPage = ({ repos, user, error }) => {
             theme={theme}
             hideColorLegend
             hideMonthLabels
-            blockSize={8}
-            blockMargin={3}
-            fontSize={12}
+            blockSize={12} // Larger blocks
+            blockMargin={4} // Increased spacing
+            fontSize={14} // Larger font size
             className="w-full"
           />
         </div>
@@ -121,9 +121,9 @@ export async function getStaticProps() {
   const username = 'narensen'; // Replace with your GitHub username
 
   try {
-    const userRes = await fetch(https://api.github.com/users/${username}, {
+    const userRes = await fetch(`https://api.github.com/users/${username}`, {
       headers: {
-        Authorization: token ${process.env.GITHUB_API_KEY}
+        Authorization: `token ${process.env.GITHUB_API_KEY}`,
       },
     });
 
@@ -132,22 +132,22 @@ export async function getStaticProps() {
       console.error('User API Error:', {
         status: userRes.status,
         statusText: userRes.statusText,
-        error: errorData
+        error: errorData,
       });
       return {
         props: {
-          error: Failed to fetch user data: ${userRes.status} ${userRes.statusText}
-        }
+          error: `Failed to fetch user data: ${userRes.status} ${userRes.statusText}`,
+        },
       };
     }
 
     const user = await userRes.json();
 
     const repoRes = await fetch(
-      https://api.github.com/users/${username}/repos?per_page=100&sort=updated,
+      `https://api.github.com/users/${username}/repos?per_page=100&sort=updated`,
       {
         headers: {
-          Authorization: token ${process.env.GITHUB_API_KEY}
+          Authorization: `token ${process.env.GITHUB_API_KEY}`,
         },
       }
     );
@@ -157,12 +157,12 @@ export async function getStaticProps() {
       console.error('Repos API Error:', {
         status: repoRes.status,
         statusText: repoRes.statusText,
-        error: errorData
+        error: errorData,
       });
       return {
         props: {
-          error: Failed to fetch repositories: ${repoRes.status} ${repoRes.statusText}
-        }
+          error: `Failed to fetch repositories: ${repoRes.status} ${repoRes.statusText}`,
+        },
       };
     }
 
@@ -183,8 +183,10 @@ export async function getStaticProps() {
     console.error('Failed to fetch GitHub data:', error);
     return {
       props: {
-        error: 'Failed to fetch GitHub data. Please try again later.'
-      }
+        error: 'Failed to fetch GitHub data. Please try again later.',
+      },
     };
   }
 }
+
+export default GithubPage;
